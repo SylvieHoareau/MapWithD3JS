@@ -26,5 +26,7 @@ h1, h2 {
     border: 1px solid #ccc;
     border-radius: 5px;
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
 
 }

@@ -18,7 +18,16 @@ const projection = d3.geoMercator()
 const path = d3.geoPath().projection(projection);
 
 // Sélection de l'élément tooltip
-const tooltip = d3.select("#tooltip");
+const tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("position", "absolute")
+    .style("visibility", "hidden")
+    .style("background", "#fff")
+    .style("border", "1px solid #ccc")
+    .style("padding", "10px")
+    .style("border-radius", "5px")
+    .style("font-size", "12px")
+    .style("pointer-events", "none");
 
 // Charger les données GeoJSON de La Réunion
 d3.json("reunion.geojson").then(data => {
@@ -36,20 +45,16 @@ d3.json("reunion.geojson").then(data => {
         .attr("stroke", "#000")
         .attr("stroke-width", 0.5)
         // Evénements de survol pour afficher les info-bulles
-        .on("mouseover", (event, d) => {
+        .on("click", (event, d) => {
             const population = d.properties.POPULATION;
             const communeName = d.properties.NOM;
-            // Info-bulle au survol
-            tooltip.style("opacity", 0.9)
+            // Info-bulle lors du clic
+            tooltip
                 .html(`<strong>${communeName}</strong><br>Population : ${population} habitants`)
-                .style("left", (event.pageX) + "px")
-                .style("top", (event.pageY - 28) + "px");
-        })
-        .on("mouseout", () => {
-            // Maquer l'info-bulle lorsque le survol se termine
-            tooltip.style("opacity", 0);
-        })
-        ;
+                .style("visbility", "visible")
+                .style("left", (event.pageX + 10)+"px")
+                .style("top", (event.pageY - 28)+"px");
+        });
 
     // Ajouter le texte représentant le nom des communes
     svg.append("g")
