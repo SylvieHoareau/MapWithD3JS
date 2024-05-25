@@ -51,7 +51,7 @@ d3.json("reunion.geojson").then(data => {
             const communeName = d.properties.NOM;
             // Info-bulle lors du clic
             tooltip
-                .html(`<strong>${communeName}</strong><br>Population : ${population} habitants<br>Surface : ${surface} km²`)
+                .html(`<strong>${communeName}</strong><br>Population : ${population.toLocaleString()} habitants<br>Surface : ${surface.toLocaleString()} km²`)
                 .style("visibility", "visible")
                 .style("left", (event.pageX + 10)+"px")
                 .style("top", (event.pageY - 28)+"px");
@@ -83,10 +83,14 @@ d3.json("reunion.geojson").then(data => {
     const legendWidth = 300;
     const legendHeight = 20;
 
-    const legend = svg.append("g")
-        .attr("transform", `translate(${width - legendWidth - 20}, ${height - legendHeight -20})`);
+    // Groupe SVG pour la légende
+    const legendGroup = svg.append("g")
+    .attr("transform", `translate(${20}, ${height -50})`);
 
-    const gradient = svg.append("defs").append("linearGradient")
+    const legend = legendGroup.append("g")
+        .attr("transform", `translate(${width - legendWidth - 20}, ${height - legendHeight - 20})`);
+
+    const gradient = legendGroup.append("defs").append("linearGradient")
         .attr("id", "legend-gradient")
         .attr("x1", "0%")
         .attr("y1", "0%")
@@ -101,7 +105,7 @@ d3.json("reunion.geojson").then(data => {
         .attr("offset", "100%")
         .attr("stop-color", colorScale(d3.max(data.features, d => d.properties.DENSITY)));
 
-    legend.append("rect")
+    legendGroup.append("rect")
         .attr("width", legendWidth)
         .attr("height", legendHeight)
         .style("fill", "url(#legend-gradient");
@@ -113,9 +117,39 @@ d3.json("reunion.geojson").then(data => {
     const legendAxis = d3.axisBottom(legendScale)
         .ticks(5);
 
-    legend.append("g")
+    legendGroup.append("g")
         .attr("transform", `translate(0, ${legendHeight})`)
         .call(legendAxis);
+
+    // Calculer l'échelle actuelle de la projection
+    const scale = projection.scale();
+
+    // Groupe SVG pour l'échelle
+    const scaleGroup = svg.append("g")
+        .attr("transform", `translate(${width - 120}, ${height - 30})`);
+
+    // Element de texte pour afficher l'échelle
+    scaleGroup.append("text")
+        .attr("x", width - 100)
+        .attr("y", height - 30)
+        .attr("font-size", "12px")
+        .attr("text-anchor", "end")
+        .text(`Echelle: 1:${scale.toFixed(0)}`);
+
+    // Définir le générateur de graticule
+    const graticule = d3.geoGraticule();
+
+    // Groupe SVG pour l'orientation
+    const graticuleGroup = svg.append("g")
+        .attr("transform", `translate(${width - 100}, ${height - 60})`);
+
+    // Ajouter un élément de chemin pour dessiner le graticule
+    graticuleGroup.append("path")
+        .datum(graticule)
+        .attr("fill", "none")
+        .attr("stroke", "#ccc")
+        .attr("stroke-width", 0.5)
+        .attr("d", path);
 
 }).catch(error => {
     console.error("Erreur lors du chargement des données GeoJSON : ", error);

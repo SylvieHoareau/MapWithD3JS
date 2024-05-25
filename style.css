@@ -4,6 +4,12 @@ body {
     padding: 0;
 }
 
+header {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: yellow;
+    padding: 10px;
+}
+
 h1, h2 {
     text-align: center;
     color: #333;
@@ -17,16 +23,28 @@ h1, h2 {
     border-radius: 10px;
 }
 
-/* .tooltip {
-    position: absolute;
-    text-align: center;
-    padding: 10px;
-    font: 12px sans-serif;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s;
+.copyright {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    gap: 10px;
+}
 
-} */
+footer {
+    width: 100%;
+    background-color: purple;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+footer img {
+    width: 50px;
+    height: 50px;
+}
