@@ -6,7 +6,7 @@ body {
 
 header {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: yellow;
+    background-color: rgb(253, 231, 37);
     padding: 10px;
 }
 
@@ -34,7 +34,7 @@ h1, h2 {
 
 footer {
     width: 100%;
-    background-color: purple;
+    background-color: rgb(73, 7, 83);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     flex-direction: row;
