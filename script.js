@@ -45,15 +45,19 @@ d3.json("reunion.geojson").then(data => {
         .attr("stroke", "#000")
         .attr("stroke-width", 0.5)
         // Evénements de survol pour afficher les info-bulles
-        .on("click", (event, d) => {
+        .on("mouseover", (event, d) => {
             const population = d.properties.POPULATION;
+            const surface = d.properties.AIRE;
             const communeName = d.properties.NOM;
             // Info-bulle lors du clic
             tooltip
-                .html(`<strong>${communeName}</strong><br>Population : ${population} habitants`)
-                .style("visbility", "visible")
+                .html(`<strong>${communeName}</strong><br>Population : ${population} habitants<br>Surface : ${surface} km²`)
+                .style("visibility", "visible")
                 .style("left", (event.pageX + 10)+"px")
                 .style("top", (event.pageY - 28)+"px");
+        })
+        .on("mouseout", () => {
+            tooltip.style("visibility", "hidden");
         });
 
     // Ajouter le texte représentant le nom des communes
@@ -67,32 +71,13 @@ d3.json("reunion.geojson").then(data => {
         })
         .attr("y", d => {
             const centroid = path.centroid(d);
-            return centroid[1] - 10; // Pour ne pas chevaucher avec les populations
+            return centroid[1];
         })
         .attr("dy", ".35em")
         .attr("text-anchor", "middle")
         .attr("font-size", "10px")
         .attr("fill", "#000")
         .text(d => d.properties.NOM);
-
-    // Ajouter le texte représentant la population
-    svg.append("g")
-        .selectAll("text")
-        .data(data.features)
-        .enter().append("text")
-        .attr("x", d => {
-            const centroid = path.centroid(d);
-            return centroid[0];
-        })
-        .attr("y", d => {
-            const centroid = path.centroid(d);
-            return centroid[1]; 
-        })
-        .attr("dy", ".35em")
-        .attr("text-anchor", "middle")
-        .attr("font-size", "10px")
-        .attr("fill", "#000")
-        .text(d => d.properties.POPULATION);
 
     // Légende
     const legendWidth = 300;

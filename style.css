@@ -17,7 +17,7 @@ h1, h2 {
     border-radius: 10px;
 }
 
-.tooltip {
+/* .tooltip {
     position: absolute;
     text-align: center;
     padding: 10px;
@@ -29,4 +29,4 @@ h1, h2 {
     opacity: 0;
     transition: opacity 0.3s;
 
-}
+} */
