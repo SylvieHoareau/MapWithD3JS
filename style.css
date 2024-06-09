@@ -74,6 +74,11 @@ footer img {
 /* Medias queries pour les écrans de taille inférieur à 768px */
 @media screen and (max-width: 768px) {
 
+    body {
+        width: 100vw;
+        height: auto;
+    }
+
     header {
         width: 100%;
         font-size: 1.2rem;
@@ -133,6 +138,11 @@ footer img {
 
 /* Media queries pour les écrans de taille supérieure à 1024 px*/
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+
+    body {
+        width: 100vw;
+        height: auto;
+    }
   
     header {
         width: 100%;
@@ -148,8 +158,13 @@ footer img {
         height: 100%;
         padding-bottom: 62.5%; /* Ratio de 600/960 = 0.0.625 */
     }
+    .commune-name {
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: calc(0.5vw + 8px); /* Taille de la police en fonction de la largeur de l'écran */ 
+    }
 
     footer, .copyright {
+        width: 100%;
         font-size: 1.5rem;
     }
 }
